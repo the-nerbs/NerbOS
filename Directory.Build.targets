@@ -1,0 +1,16 @@
+<Project ToolsVersion="15.0">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">
+      $(MSBuildAllProjects);$(MSBuildThisFileFullPath)
+    </MSBuildAllProjects>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)\ProjectItemSchemas.xaml" />
+  </ItemGroup>
+
+  <ImportGroup>
+    <Import Project="$(MSBuildThisDirectory)build\NerbOS.BuildTasks.targets"/>
+  </ImportGroup>
+  
+</Project>

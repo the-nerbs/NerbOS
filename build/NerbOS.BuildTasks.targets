@@ -1,0 +1,15 @@
+<Project ToolsVersion="4.0">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">
+      $(MSBuildAllProjects);$(MSBuildThisFileFullPath)
+    </MSBuildAllProjects>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <_NerbOSBuildTaskAssembly>$(ToolsBinDir)NerbOS.BuildTasks.dll</_NerbOSBuildTaskAssembly>
+  </PropertyGroup>
+  
+  <Import Project="$(MSBuildThisFileDirectory)FASM.targets" />
+  <Import Project="$(MSBuildThisFileDirectory)CreateFloppyImage.targets" />
+  
+</Project>

@@ -1,0 +1,22 @@
+<Project ToolsVersion="15.0">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">
+      $(MSBuildAllProjects);$(MSBuildThisFileFullPath)
+    </MSBuildAllProjects>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CleanFile Condition="'$(CleanFile)'==''">$(MSBuildProjectFile).FileListAbsolute.txt</CleanFile>
+
+    <TargetName Condition="'$(TargetName)'==''">$(MSBuildProjectName)</TargetName>
+    <TargetExtension Condition="'$(TargetExtension)'==''">.bin</TargetExtension>
+
+    <OutputPath Condition="'$(OutputPath)'==''">$(BinDir)</OutputPath>
+    <TargetDir Condition="'$(TargetDir)'==''">$(OutputPath)</TargetDir>
+
+    <TargetFileName Condition="'$(TargetFileName)'==''">$(TargetName)$(TargetExtension)</TargetFileName>
+    <TargetPath Condition="'$(TargetPath)'==''">$(TargetDir)$(TargetFileName)</TargetPath>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)common.targets"/>
+</Project>

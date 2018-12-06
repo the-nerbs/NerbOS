@@ -1,0 +1,42 @@
+<Project ToolsVersion="4.0">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">
+      $(MSBuildAllProjects);$(MSBuildThisFileFullPath)
+    </MSBuildAllProjects>
+  </PropertyGroup>
+
+  <!-- include the build task -->
+  <UsingTask TaskName="Fasm" AssemblyFile="$(_NerbOSBuildTaskAssembly)" />
+
+  <ItemGroup>
+    <AvailableItemName Include="FASMInclude"/>
+    <AvailableItemName Include="FASM"/>
+  </ItemGroup>
+
+  <Target Name="FASMAssemble"
+          Condition="'@(FASM)' != ''"
+          Inputs="@(FASM)"
+          Outputs="$(OutputPath)\%(FASM.Filename).bin">
+
+    <!-- invoke FASM -->
+    <Fasm Source="%(FASM.Identity)"
+          FasmPath="$(FASMPath)"
+          OutputDirectory="$(OutputPath)"
+          GenerateSymbols="%(FASM.CreateSymbols)">
+      <Output TaskParameter="Outputs" PropertyName="FASMAssemble" />
+    </Fasm>
+
+    <!-- Tell MSBuild about the outputs for Clean -->
+    <ItemGroup>
+      <FileWrites Include="$(FASMAssemble)" />
+    </ItemGroup>
+  </Target>
+
+  <!-- define some default metadata -->
+  <ItemDefinitionGroup>
+    <FASM>
+      <CreateSymbols>True</CreateSymbols>
+    </FASM>
+  </ItemDefinitionGroup>
+
+</Project>

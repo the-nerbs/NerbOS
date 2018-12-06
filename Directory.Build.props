@@ -1,0 +1,55 @@
+<Project ToolsVersion="15.0">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">
+      $(MSBuildAllProjects);$(MSBuildThisFileFullPath)
+    </MSBuildAllProjects>
+  </PropertyGroup>
+  
+  <!-- Root props, do not import the next Directory.Build.props above this one -->
+
+  <PropertyGroup Label="Defaults">
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <SolutionRootDir>$(MSBuildThisFileDirectory)</SolutionRootDir>
+    <ProjectDefsDir>$(SolutionRootDir)build\projectdefs\</ProjectDefsDir>
+
+    <RootBinDir>$(MSBuildThisFileDirectory)bin\</RootBinDir>
+    <RootIntermediateDir>$(MSBuildThisFileDirectory)obj\</RootIntermediateDir>
+
+    <!-- PlatformShortName isn't always defined by the standard targets, -->
+    <!-- so define it as just the regular Platform if needed. -->
+    <PlatformShortName Condition="'$(PlatformShortName)' == ''">$(Platform)</PlatformShortName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.csproj'">
+    <PlatformShortName Condition="'$(PlatformShortName)' == 'AnyCPU'">x86</PlatformShortName>
+    <PlatformShortName Condition="'$(PlatformShortName)' == 'Any CPU'">x86</PlatformShortName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
+    <PlatformShortName Condition="'$(PlatformShortName)' == 'Win32'">x86</PlatformShortName>
+  </PropertyGroup>
+  
+  <PropertyGroup Label="Directories">
+    <BuildFlavor>$(PlatformShortName)_$(Configuration)</BuildFlavor>
+
+    <BinDir>$(RootBinDir)$(BuildFlavor)\$(MSBuildProjectName)\</BinDir>
+    <IntermediateDir>$(RootIntermediateDir)$(BuildFlavor)\$(MSBuildProjectName)\</IntermediateDir>
+
+    <!-- Tools must build as AnyCPU for C# or x86 for C++ for maximum compatibility -->
+    <ToolsBinDir>$(RootBinDir)x86_$(Configuration)\tools\</ToolsBinDir>
+  </PropertyGroup>
+
+  <!-- Import the user's environment properties -->
+  <Import Project="Environment.user.props" />
+
+  <PropertyGroup>
+    <SnkFile>$(MSBuildThisFileDirectory)NerbOS.snk</SnkFile>
+
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+</Project>

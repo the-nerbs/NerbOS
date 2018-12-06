@@ -1,0 +1,34 @@
+<Project ToolsVersion="4.0">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">
+      $(MSBuildAllProjects);$(MSBuildThisFileFullPath)
+    </MSBuildAllProjects>
+  </PropertyGroup>
+
+  <!-- include the build task -->
+  <UsingTask TaskName="CreateFloppyDisk" AssemblyFile="$(_NerbOSBuildTaskAssembly)" />
+
+  <Target Name="CreateFloppyImage"
+          DependsOnTargets="FASMAssemble;CopyFilesToOutputDirectory"
+          Inputs="%(Content.FullPath)"
+          Outputs="$(TargetPath)">
+
+    <!-- Invoke the tool -->
+    <CreateFloppyDisk Sources="@(Content)"
+                      OutputDirectory="$(OutputPath)">
+      <Output TaskParameter="Outputs" PropertyName="CreateFloppyImageOutputs"/>
+    </CreateFloppyDisk>
+
+    <!-- Tell MSBuild about the outputs for Clean -->
+    <ItemGroup>
+      <FileWrites Include="$(CreateFloppyImageOutputs)" />
+    </ItemGroup>
+  </Target>
+
+  <!-- define some default metadata -->
+  <ItemDefinitionGroup>
+    <Content>
+    </Content>
+  </ItemDefinitionGroup>
+
+</Project>

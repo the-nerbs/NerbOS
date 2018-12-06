@@ -1,0 +1,16 @@
+<ProjectSchemaDefinitions xmlns="http://schemas.microsoft.com/build/2009/properties">
+  
+  <ContentType Name="FASM"
+               DisplayName="FASM assembly source"
+               ItemType="FASM" />
+  
+  <ItemType Name="FASM"
+            DisplayName="FASM assembly source" />
+  
+  <ItemType Name="FASMInclude"
+            DisplayName="FASM assembly include" />
+  
+  <FileExtension Name=".asm" ContentType="FASM"/>
+  
+</ProjectSchemaDefinitions>
+
