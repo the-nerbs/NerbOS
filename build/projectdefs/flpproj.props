@@ -1,0 +1,18 @@
+<Project ToolsVersion="15.0">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">
+      $(MSBuildAllProjects);$(MSBuildThisFileFullPath)
+    </MSBuildAllProjects>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetName>$(MSBuildProjectName)</TargetName>
+    <TargetExt>.img</TargetExt>
+    <TargetDir>$(OutputPath)</TargetDir>
+    <TargetFileName>$(TargetName)$(TargetExt)</TargetFileName>
+    <TargetPath>$(TargetDir)$(TargetFileName)</TargetPath>
+  </PropertyGroup>
+
+  <!-- this is required by Microsoft.Common.targets, but not defined in there or Microsoft.Common.props -->
+  <Target Name="CreateManifestResourceNames" Condition="false" />
+</Project>

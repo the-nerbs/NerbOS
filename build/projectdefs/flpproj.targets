@@ -1,0 +1,17 @@
+<Project ToolsVersion="15.0">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">
+      $(MSBuildAllProjects);$(MSBuildThisFileFullPath)
+    </MSBuildAllProjects>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <CoreCompileDependsOn>
+      CreateFloppyImage;
+      $(CoreCompileDependsOn)
+    </CoreCompileDependsOn>
+  </PropertyGroup>
+  <Target Name="CoreCompile"
+          DependsOnTargets="$(CoreCompileDependsOn)" />
+
+</Project>

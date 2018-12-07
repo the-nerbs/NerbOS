@@ -36,7 +36,7 @@
   <PropertyGroup Label="Directories">
     <BuildFlavor>$(PlatformShortName)_$(Configuration)</BuildFlavor>
 
-    <BinDir>$(RootBinDir)$(BuildFlavor)\$(MSBuildProjectName)\</BinDir>
+    <BinDir>$(RootBinDir)$(BuildFlavor)\</BinDir>
     <IntermediateDir>$(RootIntermediateDir)$(BuildFlavor)\$(MSBuildProjectName)\</IntermediateDir>
 
     <!-- Tools must build as AnyCPU for C# or x86 for C++ for maximum compatibility -->

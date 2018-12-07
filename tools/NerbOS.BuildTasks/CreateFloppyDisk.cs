@@ -12,10 +12,13 @@ namespace NerbOS.BuildTasks
         [Required]
         public ITaskItem[] Sources { get; set; }
 
+        public ITaskItem[] BootstrapFile { get; set; }
+
+        [Required]
+        public string ToolsDirectory { get; set; }
+
         [Required]
         public string OutputPath { get; set; }
-
-        public string BootSectorFile { get; set; }
 
         [Output]
         public ITaskItem[] Outputs { get; set; }
@@ -28,7 +31,7 @@ namespace NerbOS.BuildTasks
 
         protected override string GenerateFullPathToTool()
         {
-            return Utilities.FullToolPath(ToolPath, ToolName);
+            return Utilities.FullToolPath(ToolsDirectory, ToolName);
         }
 
         protected override string GenerateCommandLineCommands()
@@ -36,7 +39,19 @@ namespace NerbOS.BuildTasks
             var cmdLine = new CommandLineBuilder();
             var outputs = new List<ITaskItem>();
 
-            cmdLine.AppendSwitchIfNotNull("/b:", BootSectorFile);
+            ITaskItem bootstrap = null;
+            if (BootstrapFile != null)
+            {
+                if (BootstrapFile.Length > 1)
+                {
+                    Log.LogError("Multiple bootstrap files is not supported.");
+                    return null;
+                }
+
+                bootstrap = BootstrapFile[0];
+            }
+
+            cmdLine.AppendSwitchIfNotNull("/b:", bootstrap);
             cmdLine.AppendSwitchIfNotNull("/o:", OutputPath);
             cmdLine.AppendFileNamesIfNotNull(Sources, " ");
 

@@ -16,7 +16,7 @@
   <Target Name="FASMAssemble"
           Condition="'@(FASM)' != ''"
           Inputs="@(FASM)"
-          Outputs="$(OutputPath)\%(FASM.Filename).bin">
+          Outputs="$(TargetPath)">
 
     <!-- invoke FASM -->
     <Fasm Source="%(FASM.Identity)"

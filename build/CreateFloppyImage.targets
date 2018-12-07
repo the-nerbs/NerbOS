@@ -9,26 +9,22 @@
   <UsingTask TaskName="CreateFloppyDisk" AssemblyFile="$(_NerbOSBuildTaskAssembly)" />
 
   <Target Name="CreateFloppyImage"
-          DependsOnTargets="FASMAssemble;CopyFilesToOutputDirectory"
-          Inputs="%(Content.FullPath)"
+          Inputs="@(SourceFile)"
           Outputs="$(TargetPath)">
 
     <!-- Invoke the tool -->
-    <CreateFloppyDisk Sources="@(Content)"
-                      OutputDirectory="$(OutputPath)">
-      <Output TaskParameter="Outputs" PropertyName="CreateFloppyImageOutputs"/>
+    <CreateFloppyDisk Sources="@(SourceFile)"
+                      BootstrapFile="@(Bootstrap)"
+                      ToolsDirectory="$(ToolsBinDir)"
+                      OutputPath="$(IntermediateOutputPath)\$(TargetFileName)">
+      <Output TaskParameter="Outputs" ItemName="FileWrites"/>
     </CreateFloppyDisk>
-
-    <!-- Tell MSBuild about the outputs for Clean -->
-    <ItemGroup>
-      <FileWrites Include="$(CreateFloppyImageOutputs)" />
-    </ItemGroup>
   </Target>
 
   <!-- define some default metadata -->
   <ItemDefinitionGroup>
-    <Content>
-    </Content>
+    <SourceFile>
+    </SourceFile>
   </ItemDefinitionGroup>
 
 </Project>
