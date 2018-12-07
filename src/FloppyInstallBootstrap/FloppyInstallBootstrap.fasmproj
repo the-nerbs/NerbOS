@@ -1,19 +1,18 @@
 <Project DefaultTargets="Build" ToolsVersion="15.0">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props'))" />
-  
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{2230CFB7-0D1A-4F0C-B207-9DAC0CEB73DF}</ProjectGuid>
   </PropertyGroup>
 
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="$(ProjectDefsDir)fasmproj.props" />
   
   <ItemGroup>
     <FASM Include="FloppyInstallBootstrap.asm" />
   </ItemGroup>
 
-  <Import Project="$(ProjectDefsDir)fasmproj.targets" />
 
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets'))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="exists('$(MSBuildToolsPath)\Microsoft.Common.targets')" />
+  <Import Project="$(ProjectDefsDir)fasmproj.targets" />
 </Project>

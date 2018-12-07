@@ -21,15 +21,11 @@
     <!-- invoke FASM -->
     <Fasm Source="%(FASM.Identity)"
           FasmPath="$(FASMPath)"
-          OutputDirectory="$(OutputPath)"
+          OutputDirectory="$(IntermediateOutputPath)"
           GenerateSymbols="%(FASM.CreateSymbols)">
-      <Output TaskParameter="Outputs" PropertyName="FASMAssemble" />
+      <Output TaskParameter="Outputs" ItemName="AddModules" />
+      <Output TaskParameter="Outputs" ItemName="FileWrites" />
     </Fasm>
-
-    <!-- Tell MSBuild about the outputs for Clean -->
-    <ItemGroup>
-      <FileWrites Include="$(FASMAssemble)" />
-    </ItemGroup>
   </Target>
 
   <!-- define some default metadata -->

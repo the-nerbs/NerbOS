@@ -1,20 +1,18 @@
 <Project ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetName Condition="'$(TargetName)'==''">$(MSBuildProjectName)</TargetName>
-    <TargetExtension Condition="'$(TargetExtension)'==''">.bin</TargetExtension>
-
-    <OutputPath Condition="'$(OutputPath)'==''">$(BinDir)</OutputPath>
-    <TargetDir Condition="'$(TargetDir)'==''">$(OutputPath)</TargetDir>
-
-    <TargetPath Condition="'$(TargetPath)'==''">$(TargetDir)$(TargetName)$(TargetExtension)</TargetPath>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">
+      $(MSBuildAllProjects);$(MSBuildThisFileFullPath)
+    </MSBuildAllProjects>
   </PropertyGroup>
-
-  <Import Project="$(MSBuildThisFileDirectory)common.props" />
 
   <PropertyGroup>
-    <CompileDependsOn>
-      FASMAssemble;
-      $(CompileDependsOn)
-    </CompileDependsOn>
+    <TargetName>$(MSBuildProjectName)</TargetName>
+    <TargetExt>.bin</TargetExt>
+    <TargetDir>$(OutputPath)</TargetDir>
+    <TargetFileName>$(TargetName)$(TargetExt)</TargetFileName>
+    <TargetPath>$(TargetDir)$(TargetFileName)</TargetPath>
   </PropertyGroup>
+
+  <!-- this is required by Microsoft.Common.targets, but not defined in there or Microsoft.Common.props -->
+  <Target Name="CreateManifestResourceNames" Condition="false" />
 </Project>

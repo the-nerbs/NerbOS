@@ -6,17 +6,12 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <CleanFile Condition="'$(CleanFile)'==''">$(MSBuildProjectFile).FileListAbsolute.txt</CleanFile>
-
-    <TargetName Condition="'$(TargetName)'==''">$(MSBuildProjectName)</TargetName>
-    <TargetExtension Condition="'$(TargetExtension)'==''">.bin</TargetExtension>
-
-    <OutputPath Condition="'$(OutputPath)'==''">$(BinDir)</OutputPath>
-    <TargetDir Condition="'$(TargetDir)'==''">$(OutputPath)</TargetDir>
-
-    <TargetFileName Condition="'$(TargetFileName)'==''">$(TargetName)$(TargetExtension)</TargetFileName>
-    <TargetPath Condition="'$(TargetPath)'==''">$(TargetDir)$(TargetFileName)</TargetPath>
+    <CoreCompileDependsOn>
+      FASMAssemble;
+      $(CoreCompileDependsOn)
+    </CoreCompileDependsOn>
   </PropertyGroup>
+  <Target Name="CoreCompile"
+          DependsOnTargets="$(CoreCompileDependsOn)" />
 
-  <Import Project="$(MSBuildThisFileDirectory)common.targets"/>
 </Project>
