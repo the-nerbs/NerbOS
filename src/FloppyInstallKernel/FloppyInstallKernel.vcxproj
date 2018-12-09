@@ -103,7 +103,11 @@
       <FixedBaseAddress>true</FixedBaseAddress>
       <AdditionalLibraryDirectories>$(TargetDir)</AdditionalLibraryDirectories>
       <AdditionalDependencies>KernelBase.lib</AdditionalDependencies>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(ToolsBinDir)PdbToBochsSymbols.exe" "$(TargetDir)$(TargetName).pdb" "$(TargetDir)$(TargetName).sym"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -117,7 +121,11 @@
       <FixedBaseAddress>true</FixedBaseAddress>
       <AdditionalLibraryDirectories>$(TargetDir)</AdditionalLibraryDirectories>
       <AdditionalDependencies>KernelBase.lib</AdditionalDependencies>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(ToolsBinDir)PdbToBochsSymbols.exe" "$(TargetDir)$(TargetName).pdb" "$(TargetDir)$(TargetName).sym"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -136,6 +144,9 @@
       <AdditionalLibraryDirectories>$(TargetDir)</AdditionalLibraryDirectories>
       <AdditionalDependencies>KernelBase.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(ToolsBinDir)PdbToBochsSymbols.exe" "$(TargetDir)$(TargetName).pdb" "$(TargetDir)$(TargetName).sym"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -154,6 +165,9 @@
       <AdditionalLibraryDirectories>$(TargetDir)</AdditionalLibraryDirectories>
       <AdditionalDependencies>KernelBase.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(ToolsBinDir)PdbToBochsSymbols.exe" "$(TargetDir)$(TargetName).pdb" "$(TargetDir)$(TargetName).sym"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\$(PlatformTarget)\*.c" />
