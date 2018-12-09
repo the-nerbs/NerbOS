@@ -777,7 +777,7 @@ LoadMemoryMap:
         jne         .failure                    ; 
 
         cmp         cx, 20                      ; ecx = returned size of entry
-        jl          .failure                    ;   make sure it's valid
+        jl          .failure                    ;   make sure it's valid (either 20 or 24 bytes)
         cmp         cx, 24                      ;  /
         jg          .failure                    ; /
 

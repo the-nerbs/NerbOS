@@ -10,7 +10,7 @@
   
   <ItemGroup>
     <Bootstrap Include="$(OutputPath)\FloppyInstallBootstrap.bin" />
-    <SourceFile Include="$(OutputPath)\FloppyInstallBootstrap.fas"/>
+    <SourceFile Include="$(OutputPath)\NFLPKRNL.exe"/>
   </ItemGroup>
 
   <ItemGroup>
