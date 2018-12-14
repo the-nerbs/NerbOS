@@ -33,13 +33,19 @@
     <ClInclude Include="include\intrin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\kprintf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\kstddef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\kstdint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\msvc\no_sal2.h">
+    <ClInclude Include="include\msvc\concurrencysal.h">
       <Filter>Header Files\msvc</Filter>
     </ClInclude>
-    <ClInclude Include="include\msvc\concurrencysal.h">
+    <ClInclude Include="include\msvc\no_sal2.h">
       <Filter>Header Files\msvc</Filter>
     </ClInclude>
     <ClInclude Include="include\msvc\sal.h">
@@ -63,27 +69,87 @@
     <ClInclude Include="include\vgatext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\x86\platform.h">
-      <Filter>Header Files\x86</Filter>
-    </ClInclude>
     <ClInclude Include="include\x64\platform.h">
       <Filter>Header Files\x64</Filter>
     </ClInclude>
+    <ClInclude Include="include\x86\kstdargs.h">
+      <Filter>Header Files\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="include\x86\platform.h">
+      <Filter>Header Files\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="include\krtinit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\x86\compilerintrin.h">
+      <Filter>Header Files\x86</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\kprintf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\physmem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\vgatext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\krtinit.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="src\x86\intrin.asm">
-      <Filter>Source Files\x86</Filter>
+    <MASM Include="src\$(PlatformTarget)\intrin.asm">
+      <Filter>Source Files</Filter>
     </MASM>
-    <MASM Include="src\x64\intrin.asm">
-      <Filter>Source Files\x64</Filter>
+    <MASM Include="$(CRTSourcesDir)\i386\lldiv.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\lldvrm.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\llmul.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\llrem.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\llshl.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\llshr.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\ulldiv.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\ulldvrm.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\ullrem.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\ullshr.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\memchr.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\memcpy.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\memmove.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\memset.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\alloca16.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\chkstk.asm">
+      <Filter>Source Files</Filter>
     </MASM>
   </ItemGroup>
 </Project>

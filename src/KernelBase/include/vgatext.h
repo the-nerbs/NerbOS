@@ -5,6 +5,7 @@
 #pragma once
 #include "nosbase.h"
 #include "kstdint.h"
+#include "kprintf.h"
 #include "sal.h"
 
 NOS_EXTERN_C
@@ -109,7 +110,12 @@ void vtClearScreen();
 //! \param  ch     The character to print.
 //! \param  color  The color to print in.
 //-------------------------------------------------------------------------------------------------
-void vtPrintChar(char ch, int color = VGA_DefaultColor);
+void vtPrintColoredChar(char ch, int color);
+
+inline void vtPrintChar(char ch)
+{
+    vtPrintColoredChar(ch, VGA_DefaultColor);
+}
 
 //-------------------------------------------------------------------------------------------------
 //! \brief  Prints a string of characters to the VGA text mode screen.
@@ -117,6 +123,16 @@ void vtPrintChar(char ch, int color = VGA_DefaultColor);
 //! \param  pszText  The string to print.
 //! \param  color    The color to print in.
 //-------------------------------------------------------------------------------------------------
-void vtPrint(_In_z_ const char* pszText, int color = VGA_DefaultColor);
+void vtPrintColoredString(_In_z_ const char* pszText, int color);
+
+inline void vtPrintString(_In_z_ const char* pszText)
+{
+    vtPrintColoredString(pszText, VGA_DefaultColor);
+}
+
+//-------------------------------------------------------------------------------------------------
+//! \brief  Gets a kprintf stream which prints to the VGA text mode screen.
+//-------------------------------------------------------------------------------------------------
+const kprintf_stream* vtKPrintfStream();
 
 NOS_END_EXTERN_C

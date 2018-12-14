@@ -85,16 +85,18 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <Optimization>Disabled</Optimization>
+      <Optimization>Custom</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)include\$(PlatformTarget)\;$(ProjectDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>
     <Lib>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <Optimization>Disabled</Optimization>
+      <Optimization>Custom</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)include\$(PlatformTarget)\;$(ProjectDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>
     <Lib>
     </Lib>
@@ -129,6 +131,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\intrin.h" />
+    <ClInclude Include="include\kprintf.h" />
+    <ClInclude Include="include\krtinit.h" />
+    <ClInclude Include="include\kstddef.h" />
     <ClInclude Include="include\kstdint.h" />
     <ClInclude Include="include\msvc\concurrencysal.h" />
     <ClInclude Include="include\msvc\no_sal2.h" />
@@ -140,15 +145,20 @@
     <ClInclude Include="include\vgaport.h" />
     <ClInclude Include="include\vgatext.h" />
     <ClInclude Include="include\x64\platform.h" />
+    <ClInclude Include="include\x86\compilerintrin.h" />
+    <ClInclude Include="include\x86\kstdargs.h" />
     <ClInclude Include="include\x86\platform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\kprintf.c" />
+    <ClCompile Include="src\krtinit.c" />
     <ClCompile Include="src\physmem.cpp" />
     <ClCompile Include="src\vgatext.cpp" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="exists('src\$(PlatformTarget)\intrin.asm')">
     <MASM Include="src\$(PlatformTarget)\intrin.asm" />
   </ItemGroup>
+  <Import Project="vcruntime.$(PlatformTarget).items" Condition="exists('vcruntime.$(PlatformTarget).items')" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />

@@ -1,0 +1,68 @@
+<Project>
+  <!--
+    Import items from the MSVC CRT sources that are required for the MSVC compiler. These are for
+    functions or operations which require library support (such as 64-bit integer math), and 
+    functions which MSVC may place calls to where possible and more efficient. 
+  -->
+  <PropertyGroup>
+    <CRTSourcesDir>$(VCToolsInstallDir)crt\src\</CRTSourcesDir>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <!-- int64 math -->
+    <MASM Include="$(CRTSourcesDir)\i386\lldiv.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\lldvrm.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\llmul.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\llrem.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\llshl.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\llshr.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    
+    <!-- uint64 math-->
+    <MASM Include="$(CRTSourcesDir)\i386\ulldiv.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\ulldvrm.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\ullrem.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\ullshr.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    
+    <!-- memory functions -->
+    <MASM Include="$(CRTSourcesDir)\i386\memchr.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\memcpy.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\memmove.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\memset.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    
+    <!-- alloca -->
+    <MASM Include="$(CRTSourcesDir)\i386\alloca16.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+    <MASM Include="$(CRTSourcesDir)\i386\chkstk.asm">
+      <IncludePaths>$(CRTSourcesDir)\i386\</IncludePaths>
+    </MASM>
+  </ItemGroup>
+</Project>

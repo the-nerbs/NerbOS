@@ -74,6 +74,14 @@ __bochsbreak proc
 __bochsbreak endp
 
 
+abs proc uses edx, value:dword
+    mov     eax, value
+    cdq
+    xor     eax, edx
+    sub     eax, edx
+    ret
+abs endp
+
 strlen proc uses ecx edi, psz:ptr
     cld                     ; make sure we scan in the right direction.
     xor     eax, eax        ; eax = 0
@@ -85,17 +93,5 @@ strlen proc uses ecx edi, psz:ptr
     lea     eax, [ecx-1]    ;  /
     ret
 strlen endp
-
-wcslen proc uses ecx edi, psz:ptr
-    cld                     ; make sure we scan in the right direction.
-    xor     eax, eax        ; eax = 0
-    xor     ecx, ecx        ; ecx = 0
-    not     ecx             ; ecx = 0xFFFFFFFF
-    mov     edi, psz        ; edi = psz
-    repne scasw             ; search for the 0-terminator
-    not     ecx             ; compute the number of chars it advanced based on the counter
-    lea     eax, [ecx-1]    ;  /
-    ret
-wcslen endp
 
 end

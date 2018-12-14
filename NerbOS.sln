@@ -13,6 +13,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NerbOS.FloppyBuilder", "tools\NerbOS.FloppyBuilder\NerbOS.FloppyBuilder.csproj", "{69E69F6D-4F45-41DF-86E3-299FCC6AFACA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FloppyInstallKernel", "src\FloppyInstallKernel\FloppyInstallKernel.vcxproj", "{13FA3C52-F7A4-4E18-B9F6-9AE47508D653}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5F004521-F21A-48FD-A373-518A59422D62} = {5F004521-F21A-48FD-A373-518A59422D62}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KernelBase", "src\KernelBase\KernelBase.vcxproj", "{5D419523-686D-4CB6-BCFC-BA686ABB8CD6}"
 EndProject

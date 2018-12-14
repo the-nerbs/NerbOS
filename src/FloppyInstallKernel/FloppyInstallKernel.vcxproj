@@ -93,8 +93,9 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <Optimization>Disabled</Optimization>
+      <Optimization>Custom</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)include\$(PlatformTarget)\;$(ProjectDir)include\;..\KernelBase\include\$(PlatformTarget)\;..\KernelBase\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>
     <Link>
       <EntryPointSymbol>kmain</EntryPointSymbol>
@@ -111,8 +112,9 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <Optimization>Disabled</Optimization>
+      <Optimization>Custom</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)include\$(PlatformTarget)\;$(ProjectDir)include\;..\KernelBase\include\$(PlatformTarget)\;..\KernelBase\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>
     <Link>
       <EntryPointSymbol>kmain</EntryPointSymbol>

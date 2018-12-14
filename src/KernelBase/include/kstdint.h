@@ -163,3 +163,26 @@ typedef uint64_t            uintptr_t;
 #define UINT32_C(x)         (x ## U)
 #define UINT64_C(x)         (x ## ULL)
 #define UINTMAX_C(x)        UINT64_C(x)
+
+//-----------------------------------------------------------------------------
+// size_t, ptrdiff_t
+//-----------------------------------------------------------------------------
+#if NOS_PTR_SIZE == NOS_PTR_SIZE_32BIT
+
+typedef uint32_t    size_t;
+typedef int32_t     ptrdiff_t;
+
+typedef int32_t     __signed_size_t;
+typedef uint32_t    __unsigned_ptrdiff_t;
+
+#elif NOS_PTR_SIZE == NOS_PTR_SIZE_64BIT
+
+typedef uint64_t    size_t;
+typedef int64_t     ptrdiff_t;
+
+typedef int64_t     __signed_size_t;
+typedef uint64_t    __unsigned_ptrdiff_t;
+
+#else
+#error Unsupported platform!
+#endif
