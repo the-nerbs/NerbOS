@@ -4,15 +4,16 @@
 //-------------------------------------------------------------------------------------------------
 #pragma once
 #include "nosbase.h"
+#include "kstddef.h"
 #include "kstdint.h"
 #include "sal.h"
 
 NOS_EXTERN_C
 
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //! \brief  Indicates the type of memory described by a MemMapEntry.
 //! Defined by BIOS INT 0x15, EAX = 0xE820
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 enum MemMapRegionType
 {
     MMRT_Usable          = 1,   //!< Memory region is usable by the OS.
@@ -23,10 +24,10 @@ enum MemMapRegionType
     MMRT_BadMemory       = 5,   //!< Memory region is not usable.
 };
 
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //! \brief  Memory region descriptor.
 //! Defined by BIOS INT 0x15, EAX = 0xE820
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 struct MemMapEntry
 {
     uint64_t base;              //!< Base address of the memory region.
@@ -36,10 +37,10 @@ struct MemMapEntry
 };
 static_assert(sizeof(MemMapEntry) == 24, "Unexpected size of MemMapEntry");
 
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //! \brief  Memory descriptor.
 //! Defined by BIOS INT 0x15, EAX = 0xE820
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 struct MemoryMap
 {
     int32_t count;              //!< number of entries.
@@ -50,29 +51,32 @@ struct MemoryMap
 };
 
 
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //! \brief  Initialized the physical memory manager.
 //!
 //! \param  mmap  The physical memory map.
-//-----------------------------------------------------------------------------
-void pmInitialize(_In_ MemoryMap* mmap);
+//!
+//! \returns  True on success, or false on failure.
+//-------------------------------------------------------------------------------------------------
+_Check_return_ _Success_(return != false)
+bool pmInitialize(_In_ const MemoryMap* mmap);
 
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //! \brief  Gets the size of a physical memory page.
-//-----------------------------------------------------------------------------
-uint64_t pmPageSize();
+//-------------------------------------------------------------------------------------------------
+uint64_t pmPageSize(void);
 
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //! \brief  Gets the total amount of usable memory.
-//-----------------------------------------------------------------------------
-uint64_t pmTotalMemory();
+//-------------------------------------------------------------------------------------------------
+uint64_t pmTotalMemory(void);
 
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //! \brief  Gets the total amount of allocated memory.
-//-----------------------------------------------------------------------------
-uint64_t pmAllocatedMemory();
+//-------------------------------------------------------------------------------------------------
+uint64_t pmAllocatedMemory(void);
 
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //! \brief  Allocates enough pages of contiguous physical memory to fit the
 //!         requested number of bytes.
 //!
@@ -81,29 +85,35 @@ uint64_t pmAllocatedMemory();
 //!                         the requested memory.
 //! \param[out]  pageCount  The number of pages allocated.
 //!
-//! \returns  A pointer to the allocated pages, or null if there is not enough
-//!           contiguous memory to satisfy the request.
-//-----------------------------------------------------------------------------
-void* pmAllocateBytes(uint32_t cb, _In_opt_ void* hint, _Out_ uint32_t* pageCount);
+//! \returns  A pointer to the allocated pages, or null if no memory was requested or there is
+//!           not enough contiguous memory to satisfy the request.
+//-------------------------------------------------------------------------------------------------
+_Check_return_ _Success_(return != NULL)
+void* pmAllocateBytes(
+    uint32_t cb,
+    _In_opt_ void* hint,
+    _Out_ uint32_t* pageCount
+);
 
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //! \brief  Allocates the given number of pages of contiguous physical memory.
 //! 
 //! \param  pageCount  The number of pages to allocate.
 //! \param  hint       If not null, a position at which to try to allocate the
 //!                    requested memory.
 //!
-//! \returns  A pointer to the allocated pages, or null if there is not enough
-//!           contiguous memory to satisfy the request.
-//-----------------------------------------------------------------------------
+//! \returns  A pointer to the allocated pages, or null if no memory was requested or there is
+//!           not enough contiguous memory to satisfy the request.
+//-------------------------------------------------------------------------------------------------
+_Check_return_ _Success_(return != NULL)
 void* pmAllocatePages(uint32_t pageCount, _In_opt_ void* hint);
 
-//-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //! \brief  Frees the given number of pages at the given point in memory.
 //!
 //! \param  ptr        A pointer to the base of the memory to free.
 //! \param  pageCount  The number of pages to free.
-//-----------------------------------------------------------------------------
-void pnFree(_In_ void* ptr, uint32_t pageCount);
+//-------------------------------------------------------------------------------------------------
+void pmFree(_In_ void* ptr, uint32_t pageCount);
 
 NOS_END_EXTERN_C

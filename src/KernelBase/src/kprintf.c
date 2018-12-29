@@ -1,15 +1,11 @@
 #include "kprintf.h"
+#include "nosbase.h"
 #include "kstddef.h"
 #include "intrin.h"
 #include "sal.h"
 
 // note: throughout this file, comments starting with 3 slashes instead
 // of 2 (`///`) are used to indicate direct quotes from the C11 spec.
-
-// just replicate stdbool inline here...
-typedef _Bool   bool;
-#define true    1
-#define false   0
 
 //-------------------------------------------------------------------------------------------------
 // constants
@@ -21,8 +17,6 @@ enum //constants
 {
     IntegerBufLen = 64,
 };
-
-#define countof(arr)    ((sizeof(arr)) / sizeof(*arr))
 
 
 //-------------------------------------------------------------------------------------------------
@@ -97,16 +91,6 @@ typedef struct tag_format_spec
 #if NOS_FLOAT_SUPPORT
 typedef long double floatmax_t;
 #endif // NOS_FLOAT_SUPPORT
-
-
-//-------------------------------------------------------------------------------------------------
-// forward declarations
-//-------------------------------------------------------------------------------------------------
-inline void fill(_Out_writes_bytes_(length) void* p, uint8_t value, size_t length)
-{
-    // it's just memset, but with some added annotations
-    memset(p, value, length);
-}
 
 
 //-------------------------------------------------------------------------------------------------
@@ -458,7 +442,7 @@ static bool is_valid_spec(_In_ const format_spec* spec)
 
 static void parse_format_spec(_In_ const char** fmt, _Out_ format_spec* spec)
 {
-    fill(spec, 0, sizeof(*spec));
+    memset(spec, 0, sizeof(*spec));
 
     // skip initial '%'
     (*fmt)++;
@@ -807,11 +791,11 @@ static void format_decimal(_In_ const kprintf_stream* stream, _In_ const format_
         || precision != 0;
 
     char buffer[IntegerBufLen];
-    fill(buffer, 0, sizeof(buffer));
+    memset(buffer, 0, sizeof(buffer));
 
     char* pszValue = printNumber
-        ? signed_to_string(value, buffer, countof(buffer), 10, precision, spec)
-        : &(buffer[countof(buffer) - 1]);
+        ? signed_to_string(value, buffer, COUNTOF(buffer), 10, precision, spec)
+        : &(buffer[COUNTOF(buffer) - 1]);
 
     const int valueLen = (int)strlen(pszValue);
     const int padSize = width - valueLen - (printSign ? 1 : 0);
@@ -870,11 +854,11 @@ static void format_octal(_In_ const kprintf_stream* stream, _In_ const format_sp
         || precision != 0;
 
     char buffer[IntegerBufLen];
-    fill(buffer, 0, sizeof(buffer));
+    memset(buffer, 0, sizeof(buffer));
 
     char* pszValue = printNumber
-        ? unsigned_to_string(value, buffer, countof(buffer), 8, precision, spec)
-        : &(buffer[countof(buffer) - 1]);
+        ? unsigned_to_string(value, buffer, COUNTOF(buffer), 8, precision, spec)
+        : &(buffer[COUNTOF(buffer) - 1]);
 
     const int valueLen = (int)strlen(pszValue);
 
@@ -948,11 +932,11 @@ static void format_hex(_In_ const kprintf_stream* stream, _In_ const format_spec
         || precision != 0;
 
     char buffer[IntegerBufLen];
-    fill(buffer, 0, sizeof(buffer));
+    memset(buffer, 0, sizeof(buffer));
 
     char* pszValue = printNumber
-        ? unsigned_to_string(value, buffer, countof(buffer), 16, precision, spec)
-        : &(buffer[countof(buffer) - 1]);
+        ? unsigned_to_string(value, buffer, COUNTOF(buffer), 16, precision, spec)
+        : &(buffer[COUNTOF(buffer) - 1]);
 
     const int valueLen = (int)strlen(pszValue);
     const int padSize = width - valueLen - (printBase ? 2 : 0);
@@ -1021,11 +1005,11 @@ static void format_unsigned(_In_ const kprintf_stream* stream, _In_ const format
         || precision != 0;
 
     char buffer[IntegerBufLen];
-    fill(buffer, 0, sizeof(buffer));
+    memset(buffer, 0, sizeof(buffer));
 
     char* pszValue = printNumber
-        ? unsigned_to_string(value, buffer, countof(buffer), 10, precision, spec)
-        : &(buffer[countof(buffer) - 1]);
+        ? unsigned_to_string(value, buffer, COUNTOF(buffer), 10, precision, spec)
+        : &(buffer[COUNTOF(buffer) - 1]);
 
     const int valueLen = (int)strlen(pszValue);
     const int padSize = width - valueLen;
@@ -1071,9 +1055,9 @@ static void format_pointer(_In_ const kprintf_stream* stream, _In_ const format_
 
 
     char buffer[IntegerBufLen];
-    fill(buffer, 0, sizeof(buffer));
+    memset(buffer, 0, sizeof(buffer));
 
-    char* pszVal = unsigned_to_string(value, buffer, countof(buffer), 16, 2 * sizeof(void*), spec);
+    char* pszVal = unsigned_to_string(value, buffer, COUNTOF(buffer), 16, 2 * sizeof(void*), spec);
 
     // prepend a '0x'
     pszVal--;

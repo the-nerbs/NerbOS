@@ -97,27 +97,22 @@ static volatile VgaChar* GetSlot(int x, int y)
     return (base + (y * VGA_Width + x));
 }
 
-static void ScrollScreen(int lines)
+static void ScrollScreenOne()
 {
-    int x, y, n;
+    volatile uint16_t* dst = (volatile uint16_t*)0xB8000;
 
-    for (y = 0, n = VGA_Height - lines;
-        y < n;
-        y++)
+    constexpr int charCount = VGA_Width * (VGA_Height - 1);
+
+    for (int i = 0; i < charCount; i++)
     {
-        for (x = 0; x < VGA_Width; x++)
-        {
-            uint16_t prev = GetSlot(x, y + lines)->word;
-            GetSlot(x, y)->word = prev;
-        }
+        *dst = *(dst + VGA_Width);
+        dst++;
     }
 
-    for (y = 0; y < lines; y++)
+    for (int i = 0; i < VGA_Width; i++)
     {
-        for (x = 0; x < VGA_Width; x++)
-        {
-            GetSlot(x, y)->word = VGA_BlankChar;
-        }
+        *dst = VGA_BlankChar;
+        dst++;
     }
 }
 
@@ -244,7 +239,7 @@ void vtPrintColoredString(const char* pszText, int color)
 
         if (cursorY >= VGA_Height)
         {
-            ScrollScreen(1);
+            ScrollScreenOne();
             cursorY = VGA_Height - 1;
         }
 

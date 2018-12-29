@@ -7,6 +7,6 @@
 
 NOS_EXTERN_C
 
-int nos_krt_init();
+int nos_krt_init(void);
 
 NOS_END_EXTERN_C

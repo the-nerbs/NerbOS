@@ -7,6 +7,7 @@ typedef _Bool   bool;
 #define false   0
 
 // MSVC initialization sections:
+// see: https://docs.microsoft.com/en-us/cpp/c-runtime-library/crt-initialization?view=vs-2017
 #pragma section(".CRT$XIA",    long, read) // First C Initializer
 #pragma section(".CRT$XIZ",    long, read) // Last C Initializer
 #pragma section(".CRT$XCA",    long, read) // First C++ Initializer
@@ -47,17 +48,18 @@ static bool run_global_ctors()
 
     // run C initializers
     for (CInitializerFn* init = __xi_a;
-        init < __xi_z;
+        init < __xi_z && result == 0;
         init++)
     {
         if (*init != NULL)
         {
             result = (**init)();
+#ifndef NDBEUG
             if (result != 0)
             {
-                __bochsbreak();
-                break;
+                __debugbreak();
             }
+#endif
         }
     }
 

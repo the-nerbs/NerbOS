@@ -96,6 +96,7 @@
       <Optimization>Custom</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)include\$(PlatformTarget)\;$(ProjectDir)include\;..\KernelBase\include\$(PlatformTarget)\;..\KernelBase\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <EntryPointSymbol>kmain</EntryPointSymbol>
@@ -135,6 +136,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>$(ProjectDir)include\$(PlatformTarget)\;$(ProjectDir)include\;..\KernelBase\include\$(PlatformTarget)\;..\KernelBase\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

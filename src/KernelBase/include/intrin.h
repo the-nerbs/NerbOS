@@ -58,7 +58,7 @@ inline cpuid_result cpuidex(int function, int subfunction)
 #endif
 
 
-INTRIN_X86_X64(void __bochsbreak());
+INTRIN_X86_X64(void __bochsbreak(void));
 
 // standard library functions which undergo intrinsic replacement by the compiler.
 // see: https://docs.microsoft.com/en-us/cpp/preprocessor/intrinsic?view=vs-2017

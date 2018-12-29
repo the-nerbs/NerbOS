@@ -13,7 +13,7 @@ NOS_EXTERN_C
 
 #define NULL            ((void*)0)
 
-#define offsetof(s, m)  ((size_t)(((s*)0)->m))
+#define offsetof(s, m)  ((size_t)&(((s*)0)->m))
 
 #define MIN(x,y)        (((x) < (y)) ? (x) : (y))
 #define MAX(x,y)        (((x) > (y)) ? (x) : (y))

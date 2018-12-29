@@ -69,20 +69,17 @@
     <ClInclude Include="include\vgatext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\x64\platform.h">
-      <Filter>Header Files\x64</Filter>
-    </ClInclude>
-    <ClInclude Include="include\x86\kstdargs.h">
-      <Filter>Header Files\x86</Filter>
-    </ClInclude>
-    <ClInclude Include="include\x86\platform.h">
-      <Filter>Header Files\x86</Filter>
-    </ClInclude>
     <ClInclude Include="include\krtinit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\x86\compilerintrin.h">
-      <Filter>Header Files\x86</Filter>
+    <ClInclude Include="include\$(PlatformTarget)\platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\$(PlatformTarget)\compilerintrin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\$(PlatformTarget)\kstdargs.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -101,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <MASM Include="src\$(PlatformTarget)\intrin.asm">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\x86</Filter>
     </MASM>
     <MASM Include="$(CRTSourcesDir)\i386\lldiv.asm">
       <Filter>Source Files</Filter>
