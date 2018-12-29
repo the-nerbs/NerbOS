@@ -67,6 +67,19 @@ void kmain(_In_ MemoryMap* mmap)
         vtPrintString("Failed to initialize memory.\n\n");
     }
 
+    constexpr uint32_t cb = 10 * 1024;
+    uint32_t numPages = 0;
+
+    __bochsbreak();
+    void* ptr = pmAllocateBytes(cb, nullptr, &numPages);
+
+    kprintf(vtKPrintfStream(), "-- allocated %u bytes (%u pages) at %p\n", cb, numPages, ptr);
+    __bochsbreak();
+
+    pmFree(ptr, numPages);
+    vtPrintString("-- freed memory\n");
+    __bochsbreak();
+
     vtPrintString("Hit end of kmain . . .\n");
     __bochsbreak();
 }

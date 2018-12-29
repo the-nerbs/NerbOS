@@ -1,6 +1,8 @@
 //-------------------------------------------------------------------------------------------------
 //! \file
 //! \brief  Implementation of the physical memory interface.
+//!
+//TODO (multithreading or sooner?): Allocation/Deallocation lock
 //-------------------------------------------------------------------------------------------------
 #include "physmem.h"
 #include "platform.h"
@@ -226,9 +228,17 @@ void* pmAllocatePages(uint32_t pageCount, void* hint)
 _Use_decl_annotations_
 void pmFree(void* ptr, uint32_t pageCount)
 {
-    // TODO: free
-    NOS_UNUSED_PARAM(ptr);
-    NOS_UNUSED_PARAM(pageCount);
+    uintptr_t baseAddr = (uintptr_t)ptr;
+
+    for (uint32_t i = 0;
+        i < pageCount && baseAddr >= (uintptr_t)ptr && baseAddr < g_totalMemory;
+        i++, baseAddr += PageSize)
+    {
+        //TODO: kassert(IsUsed(baseAddr));
+        MarkUnused(baseAddr);
+    }
+
+    g_allocatedMemory -= uint64_t{ pageCount } * PageSize;
 }
 
 
@@ -322,10 +332,12 @@ uintptr_t FindUnused(uintptr_t start, uint64_t end, int numPages)
     {
         if (*bitmap != ~uintptr_t{ 0 })
         {
+            // block of pages has some free space.
             for (int bit = 0; bit < BitsPerBitmapWord; bit++)
             {
-                if ((*bitmap & (1 << bit)) != 0)
+                if ((*bitmap & (1 << bit)) == 0)
                 {
+                    // free page
                     if (baseAddress == 0)
                     {
                         baseAddress = wordAddress + bit * PageSize;
@@ -339,6 +351,7 @@ uintptr_t FindUnused(uintptr_t start, uint64_t end, int numPages)
                 }
                 else
                 {
+                    // page is already taken
                     baseAddress = 0;
                     remainingPages = numPages;
                 }
@@ -346,6 +359,7 @@ uintptr_t FindUnused(uintptr_t start, uint64_t end, int numPages)
         }
         else
         {
+            // block of pages is already taken, move to the next.
             remainingPages = numPages;
             baseAddress = 0;
         }
